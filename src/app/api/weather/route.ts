@@ -14,6 +14,7 @@ interface CityDetailRaw {
 }
 
 interface WeatherDetailRaw {
+  dt: number;
   coord: {
     lon: number;
     lat: number;
@@ -83,7 +84,9 @@ export async function GET(request: NextRequest) {
       `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${envs.OPENWEATHER_API_KEY}`,
       {
         method: "GET",
-        cache: "no-cache",
+        next: {
+          revalidate: 2 * 60,
+        },
         headers: {
           "Content-Type": "application/json",
         },

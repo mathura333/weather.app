@@ -6,8 +6,8 @@ const apiCaller = async <T>(endpoint: string, options?: RequestInit) => {
     const response = await fetch(
       `${isInServer() ? global.apiBasePath : ""}/api/${endpoint}`,
       {
-        ...(options || {}),
         cache: "no-cache",
+        ...(options || {}),
         headers: {
           ...(options?.headers || {}),
           "Content-Type": "application/json",

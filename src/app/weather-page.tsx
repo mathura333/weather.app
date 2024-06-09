@@ -22,11 +22,11 @@ export default function WeatherPage() {
 
   return (
     <main className="min-h-screen flex justify-center items-center p-24">
-      <div className="flex flex-col items-center justify-center gap-20 w-max">
+      <div className="flex flex-col items-center justify-center gap-16 w-max">
         <div className="flex items-start gap-4">
-          <div>
+          <div className="flex flex-col gap-2">
             <input
-              className="bg-slate-200 focus:outline-cyan-700 focus:outline-1 caret-cyan-800 py-2 px-4 text-gray-950"
+              className="bg-slate-200 focus:outline-cyan-700 focus:outline-1 caret-cyan-800 py-2 px-4 text-gray-950 rounded-md"
               placeholder="Enter City Name"
               value={currentInputCity}
               onChange={(e) => setCurrentInputCity(e.target.value)}
@@ -41,15 +41,17 @@ export default function WeatherPage() {
           </div>
 
           <Button
-            onClick={() => queryParams.set("city", currentInputCity)}
+            onClick={() => {
+              queryParams.set("city", currentInputCity);
+            }}
             disabled={!currentInputCity || weather.isLoading}
-            isLoading={weather.isLoading}
+            isLoading={weather.isLoading || queryParams.isPageLoading}
           >
             Get Weather
           </Button>
         </div>
 
-        <div className="flex flex-col gap-6 w-full">
+        <div className="flex flex-col gap-6 w-max min-w-72">
           <div className="flex gap-6 flex-wrap">
             <WeatherCard
               title="Temperature"
@@ -70,7 +72,7 @@ export default function WeatherPage() {
 
             <WeatherCard
               title="Wind Speed"
-              value={weather.data ? `${weather.data.windSpeed} kmp` : "-"}
+              value={weather.data ? `${weather.data.windSpeed} kph` : "-"}
             />
           </div>
 
